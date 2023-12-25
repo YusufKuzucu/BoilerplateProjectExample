@@ -1,0 +1,71 @@
+﻿@model IEnumerable<GetSliderOutPut>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/MicroWebExampleLayout.cshtml";
+}
+<div class="banner">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        </ol>
+        <div id="sliderArea" class="carousel-inner" role="listbox">
+           
+
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+@section scripts {
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "GET",
+                url: "/Default/GetSlider/",
+                success: function (response) {
+                    var sliderArea = $("#sliderArea");
+                    sliderArea.empty();
+
+                    let sliderItem = JSON.parse(response);
+                    console.log(response);
+
+                    sliderItem.forEach(function (item) {
+                        let active;
+                        if(item.Id===1){
+                            active='active';
+                        }
+                        var addedSlider = `<div class="carousel-item ${active}" style="background:url('${item.Image}');">
+                                <div class="carousel-caption">
+                                    <h3>
+                                                ${item.Title}
+                                                        <span> ${item.SortDescription}</span>
+                                    </h3>
+                                    <div class="read">
+                                    </div>
+                                </div>
+                            </div>`;
+                        sliderArea.append(addedSlider);
+                    });
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    </script>
+}
+
+

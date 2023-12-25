@@ -1,0 +1,56 @@
+﻿@using MicroWebExample.Application.Dto.BlogDto
+@model List<GetBlogOutPut>
+@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/MicroWebExampleLayout.cshtml";
+}
+
+<!--/main-->
+<section class="main-content-w3layouts-agileits">
+	<div class="container">
+		<h3 class="tittle">Blog Posts</h3>
+		<div class="inner-sec">
+			<!--left-->
+			<div class="left-blog-info-w3layouts-agileits text-left">
+				<div class="row">
+					@foreach (var item in Model)
+					{
+						<div class="col-lg-4 card">
+							<a href="/Default/BlogDetail/@item.Id">
+								<img src="@item.Image" class="card-img-top img-fluid" alt="">
+							</a>
+							<div class="card-body">
+								<ul class="blog-icons my-4">
+									<li>
+										<a href="#">
+											<i class="far fa-calendar-alt"></i> @(((DateTime)item.CreateDate).ToString("dd-MMM"))
+										</a>
+									</li>
+									<li class="mx-2">
+										<a href="#">
+											<i class="far fa-comment"></i> 21
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="fas fa-eye"></i> 2000
+										</a>
+									</li>
+
+								</ul>
+								<h5 class="card-title">
+									<a href="/Default/BlogDetail/@item.Id">@item.Title</a>
+								</h5>
+								<p class="card-text mb-3">@item.SortDescription </p>
+								<a href="single.html" class="btn btn-primary read-m">Read More</a>
+							</div>
+						</div>
+
+					}
+					
+				</div>
+				<!--//left-->
+			</div>
+		</div>
+	</div>
+</section>
